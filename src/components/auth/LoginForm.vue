@@ -1,36 +1,124 @@
 <script setup>
 import { ref } from "vue";
+import logo from "../../assets/icons/logo.PNG";
+import eye_on from "../../assets/icons/eye-on.svg";
+import eye_off from "../../assets/icons/eye-off.svg";
 
 const isHidden = ref(true);
 </script>
 
 <template>
-  <form>
-    <input type="email" placeholder="Email" />
-    <input :type="isHidden ? 'password' : 'text'" placeholder="Password" />
+  <div id="login-container">
+    <div id="header">
+      <img :src="logo" alt="Birthday beacon logo" id="logo" />
+    </div>
 
-    <section>
-      <button type="submit">Login</button>
-      <!-- <img src="" alt=""> Replace hidden-button with image later -->
-      <button type="button" @click="isHidden = !isHidden">
-        {{ isHidden ? "Show" : "Hide" }}
+    <form>
+      <input type="email" placeholder="Email" />
+      <input :type="isHidden ? 'password' : 'text'" placeholder="Password" />
+
+      <button type="button" @click="isHidden = !isHidden" id="hidden-btn">
+        <img
+          v-bind:src="isHidden ? eye_off : eye_on"
+          alt="Visibility toggle"
+          id="eye"
+        />
       </button>
-    </section>
 
-    <section>
+      <button type="submit" id="login-btn">Login</button>
+    </form>
+
+    <hr />
+
+    <section id="account-section">
       <p>
         Don't have an account?
         <!-- <router-link to="/register">
             Register here.
         </router-link> -->
-        <a href="/register">Register here.</a>
+        <a href="/register">Register here</a>
       </p>
       <!-- <router-link to="/forgot-password">
         Forgot password?
       </router-link> -->
-      <a href="/forgot-password">Forgot password?</a>
+      <p>
+        Forgot your password?
+        <a href="/forgot-password">Reset password</a>
+      </p>
     </section>
-  </form>
+  </div>
 </template>
 
-<style></style>
+<style scoped>
+#login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+#header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#logo {
+  width: 150px;
+  height: 150px;
+  margin-bottom: 20%;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+input {
+  border: 1px solid lightgrey;
+  border-radius: 10px;
+  padding: 0.75rem;
+  margin: 1rem;
+  width: 15rem;
+}
+
+#eye {
+  width: 1rem;
+  height: 1rem;
+}
+
+#hidden-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  align-self: flex-end;
+  margin-right: 1rem;
+}
+
+#login-btn {
+  padding: 0.5rem 1rem;
+  width: 7rem;
+  font-size: 1rem;
+  cursor: pointer;
+  background-color: white;
+  border: 1px solid lightgrey;
+  border-radius: 10px;
+  color: rgb(120, 119, 119);
+}
+
+hr {
+  width: 85%;
+  border: 1px solid lightgrey;
+  margin: 2rem 0;
+}
+
+#account-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+</style>
