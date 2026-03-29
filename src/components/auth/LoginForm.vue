@@ -10,6 +10,7 @@ const isHidden = ref(true);
 <template>
   <div id="login-container">
     <div id="header">
+      <h1 alt="Title">Birthday Beacon</h1>
       <img :src="logo" alt="Birthday beacon logo" id="logo" />
     </div>
 
@@ -60,14 +61,18 @@ const isHidden = ref(true);
 
 #header {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+#header h1 {
+  font-size: 2rem;
 }
 
 #logo {
   width: 150px;
   height: 150px;
-  margin-bottom: 20%;
 }
 
 form {
