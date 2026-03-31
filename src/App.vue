@@ -1,9 +1,9 @@
 <script setup>
-import MainView from "./views/MainView.vue";
-import LoginView from "./views/LoginView.vue";
+import MainLayout from "./layouts/MainLayout.vue";
+import AuthLayout from "./layouts/AuthLayout.vue";
 </script>
 
 <template>
-  <MainView />
-  <!-- <LoginView /> -->
+  <MainLayout />
+  <!-- <AuthLayout /> -->
 </template>
