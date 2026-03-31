@@ -21,17 +21,18 @@ import menu from "../assets/icons/menu-burger.svg";
   border-bottom: 2px solid darkgray;
   border-radius: 4px;
   font-size: 12px;
-  padding: 5px;
+  padding: 0px 16px;
+  height: 70px;
 }
 
 #logo {
-  height: 50px;
-  width: 50px;
+  height: 60px;
+  width: 60px;
 }
 
 #menu-btn {
-  height: 30px;
-  width: 30px;
+  height: 35px;
+  width: 35px;
   border: none;
   background: transparent;
   border-radius: 50%;
