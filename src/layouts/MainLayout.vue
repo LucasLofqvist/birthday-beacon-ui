@@ -14,4 +14,16 @@ import Header from "../components/Header.vue";
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  overflow-y: auto;
+  width: 100%;
+}
+</style>
