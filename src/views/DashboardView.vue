@@ -4,18 +4,37 @@ import BirthdayCard from "../components/BirthdayCard.vue";
 
 <template>
   <div class="dashboard-content">
-    <section class="carusel-section">
-      <h2>Upcoming Birthdays</h2>
-      <div class="birthday-carousel">
-        <BirthdayCard />
-        <BirthdayCard />
-      </div>
-    </section>
+    <div class="birthday-carousel">
+      <BirthdayCard />
+      <BirthdayCard />
+      <BirthdayCard />
+    </div>
+
+    <hr />
   </div>
 </template>
 
 <style scoped>
 .dashboard-content {
-  border: 1px solid green;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.carusel-title {
+  justify-self: center;
+}
+
+.birthday-carousel {
+  width: 100%;
+  display: flex;
+  margin: 20px 0 20px 0;
+  align-items: center;
+  justify-content: space-around;
+}
+
+hr {
+  width: 95%;
+  border: solid 1px darkgray;
 }
 </style>
