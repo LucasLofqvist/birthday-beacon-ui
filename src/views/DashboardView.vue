@@ -63,15 +63,12 @@ hr {
 }
 
 #main-header {
-  position: relative;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
 }
 
 #contact-actions {
-  position: absolute;
-  right: 0;
   display: flex;
   align-items: center;
   gap: 8px;
