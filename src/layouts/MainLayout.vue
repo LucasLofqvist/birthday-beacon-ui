@@ -1,5 +1,6 @@
 <script setup>
 import Header from "../components/Header.vue";
+import Footer from "../components/Footer.vue";
 </script>
 
 <template>
@@ -10,7 +11,7 @@ import Header from "../components/Header.vue";
       <router-view />
     </main>
 
-    <!-- Maybe add Footer later -->
+    <Footer />
   </div>
 </template>
 
@@ -18,12 +19,11 @@ import Header from "../components/Header.vue";
 .layout {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .main-content {
   flex: 1;
-  overflow-y: auto;
   width: 100%;
 }
 </style>
