@@ -7,9 +7,7 @@
       <h3 class="date">15</h3>
     </section>
     <section class="event-details">
-      <p class="contacts-name">
-        John Doe'ssaddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
-      </p>
+      <p class="contacts-name">John Doe's</p>
       <p class="event-type">Birthday</p>
     </section>
   </div>

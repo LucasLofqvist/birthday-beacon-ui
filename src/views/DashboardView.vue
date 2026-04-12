@@ -1,5 +1,6 @@
 <script setup>
 import BirthdayCard from "../components/BirthdayCard.vue";
+import SuggestionCard from "../components/SuggestionCard.vue";
 
 import edit from "../assets/icons/edit-pen.svg";
 import profile from "../assets/icons/profile-placeholder.svg";
@@ -24,6 +25,8 @@ import profile from "../assets/icons/profile-placeholder.svg";
           <img :src="profile" alt="Contact profile image" id="profile-image" />
         </div>
       </section>
+
+      <SuggestionCard />
     </section>
   </div>
 </template>
