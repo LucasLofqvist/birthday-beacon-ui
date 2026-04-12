@@ -27,6 +27,8 @@ import profile from "../assets/icons/profile-placeholder.svg";
       </section>
 
       <SuggestionCard />
+      <SuggestionCard />
+      <SuggestionCard />
     </section>
   </div>
 </template>
