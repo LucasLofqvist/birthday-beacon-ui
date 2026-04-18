@@ -41,7 +41,8 @@ import refresh from "../assets/icons/refresh.svg";
 <style scoped>
 .suggestion-container {
   display: flex;
-  justify-content: center;
+  flex-direction: row;
+  gap: 16px;
   width: 100%;
 }
 

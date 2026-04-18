@@ -21,10 +21,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   border-top: 2px solid darkgray;
   border-radius: 4px;
-
+  margin-top: 100px;
   padding: 12px 16px;
   font-size: 12px;
 }

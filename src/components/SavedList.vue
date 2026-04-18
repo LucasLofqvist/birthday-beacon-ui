@@ -63,6 +63,7 @@ const items = ref([
     price: "$29.99",
     link: "N/A",
   },
+  // Test item - this will not be displayed since we only show top 10
   {
     itemId: 11,
     title: "Cyberpunk 2077 Print",
@@ -103,7 +104,7 @@ const items = ref([
   border: 2px solid #000;
   border-radius: 10px;
   padding: 10px;
-  margin-top: 30px;
+  margin-top: 100px;
   max-width: 600px;
   width: 100%;
 }

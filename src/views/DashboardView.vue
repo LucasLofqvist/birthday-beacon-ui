@@ -27,11 +27,13 @@ import profile from "../assets/icons/profile-placeholder.svg";
         </div>
       </section>
 
-      <SuggestionCard />
-      <SuggestionCard />
-      <SuggestionCard />
-
       <SavedList />
+
+      <div class="suggestions-list">
+        <SuggestionCard />
+        <SuggestionCard />
+        <SuggestionCard />
+      </div>
     </section>
   </div>
 </template>
@@ -89,5 +91,11 @@ hr {
 #profile-image {
   width: 30px;
   height: 30px;
+}
+
+.suggestions-list {
+  display: flex;
+  flex-direction: column;
+  margin-top: 100px;
 }
 </style>
