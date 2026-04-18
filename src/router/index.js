@@ -6,6 +6,7 @@ import AuthLayout from "../layouts/AuthLayout.vue";
 
 // Main Views
 import DashboardView from "../views/main/DashboardView.vue";
+import ContactView from "../views/main/ContactView.vue";
 
 // Auth Views
 import LoginView from "../views/auth/LoginView.vue";
@@ -19,7 +20,11 @@ const routes = [
         path: "",
         component: DashboardView,
       },
-      // I will add more routes later, contacts, settings, etc.
+      {
+        path: "contact",
+        component: ContactView,
+      },
+      // I will add more routes later, settings, etc.
     ],
   },
   {
