@@ -1,5 +1,6 @@
 <script setup>
 import Header from "../components/Header.vue";
+import Footer from "../components/Footer.vue";
 </script>
 
 <template>
@@ -10,8 +11,19 @@ import Header from "../components/Header.vue";
       <router-view />
     </main>
 
-    <!-- Maybe add Footer later -->
+    <Footer />
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  width: 100%;
+}
+</style>
