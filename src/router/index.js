@@ -5,10 +5,10 @@ import MainLayout from "../layouts/MainLayout.vue";
 import AuthLayout from "../layouts/AuthLayout.vue";
 
 // Main Views
-import DashboardView from "../views/DashboardView.vue";
+import DashboardView from "../views/main/DashboardView.vue";
 
 // Auth Views
-import LoginView from "../views/LoginView.vue";
+import LoginView from "../views/auth/LoginView.vue";
 
 const routes = [
   {

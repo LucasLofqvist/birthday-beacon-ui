@@ -1,10 +1,10 @@
 <script setup>
-import BirthdayCard from "../components/BirthdayCard.vue";
-import SuggestionCard from "../components/SuggestionCard.vue";
-import SavedList from "../components/SavedList.vue";
+import BirthdayCard from "../../components/BirthdayCard.vue";
+import SuggestionCard from "../../components/SuggestionCard.vue";
+import SavedList from "../../components/SavedList.vue";
 
-import edit from "../assets/icons/edit-pen.svg";
-import profile from "../assets/icons/profile-placeholder.svg";
+import edit from "../../assets/icons/edit-pen.svg";
+import profile from "../../assets/icons/profile-placeholder.svg";
 </script>
 
 <template>
