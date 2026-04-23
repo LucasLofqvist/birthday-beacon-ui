@@ -1,28 +1,94 @@
 <script setup>
-import { ref } from "vue";
+import { computed, reactive } from "vue";
 
-const contactName = ref("Contact Name");
-const contactAge = ref(30);
-
-const contact = ref({
-  surname: "",
-  lastname: "",
+//The contact, contactsName and contactAge probably does not need to be reactive
+//as they should be stored in a db and fetched when needed.
+const contact = reactive({
+  surname: "Bob",
+  lastname: "Smith",
   dateOfBirth: "",
   gender: "",
-  maxGiftCost: "",
-  minGiftCost: "",
+  minGiftCost: 0,
+  maxGiftCost: 0,
   interests: "",
 });
+
+//Ensures that contactName or "New contact" is rendered
+const contactName = computed(() => {
+  if (contact.surname !== "") {
+    return `${contact.surname} ${contact.lastname}`;
+  }
+  return "New contact";
+});
+
+//Calculates contacts age based on date of birth
+const contactAge = computed(() => {
+  if (contact.dateOfBirth !== "") {
+    const contactsDate = new Date(contact.dateOfBirth);
+
+    const currentYear = new Date().getFullYear();
+    const currentMonth = new Date().getMonth() + 1; // Months are zero-based
+    const currentDay = new Date().getDate();
+    let age = currentYear - contactsDate.getFullYear();
+    if (
+      currentMonth < contactsDate.getMonth() + 1 ||
+      (currentMonth === contactsDate.getMonth() + 1 &&
+        currentDay < contactsDate.getDate())
+    ) {
+      age--;
+    }
+    return age;
+  }
+});
+
+const minGiftCost = computed({
+  get() {
+    return contact.minGiftCost;
+  },
+  set(value) {
+    if (value < 0) {
+      value = 0;
+    }
+    contact.minGiftCost = value;
+    if (contact.maxGiftCost < value) {
+      contact.maxGiftCost = value;
+    }
+  },
+});
+
+const maxGiftCost = computed({
+  get() {
+    return contact.maxGiftCost;
+  },
+  set(value) {
+    if (value < 0) {
+      value = 0;
+    }
+    contact.maxGiftCost = value;
+    if (contact.minGiftCost > value) {
+      contact.minGiftCost = value;
+    }
+  },
+});
+
+//Used to limit the DoB input options
+const maxDate = new Date().toISOString().split("T")[0];
 </script>
 
 <template>
   <div class="contact-container">
-    <h1 class="contact-title">{{ contactName }} - {{ contactAge }}</h1>
+    <h1 class="contact-title">
+      {{
+        contact.dateOfBirth !== ""
+          ? `${contactName} - ${contactAge}`
+          : contactName
+      }}
+    </h1>
     <form class="contact-form">
       <!-- Left section: contact details -->
       <section class="left-section">
         <div class="form-group">
-          <label for="surname">Surname</label>
+          <label for="surname">Surname *</label>
           <input v-model="contact.surname" type="text" id="surname" />
         </div>
 
@@ -32,8 +98,13 @@ const contact = ref({
         </div>
 
         <div class="form-group">
-          <label for="dateOfBirth">Date of birth</label>
-          <input v-model="contact.dateOfBirth" type="date" id="dateOfBirth" />
+          <label for="dateOfBirth">Date of birth *</label>
+          <input
+            v-model="contact.dateOfBirth"
+            type="date"
+            id="dateOfBirth"
+            :max="maxDate"
+          />
         </div>
 
         <div class="form-group">
@@ -47,13 +118,23 @@ const contact = ref({
         </div>
 
         <div class="form-group">
-          <label for="maxGiftCost">Max-gift cost</label>
-          <input v-model="contact.maxGiftCost" type="number" id="maxGiftCost" />
+          <label for="minGiftCost">Min-gift cost</label>
+          <input
+            v-model.lazy.number="minGiftCost"
+            type="number"
+            id="minGiftCost"
+            :min="0"
+          />
         </div>
 
         <div class="form-group">
-          <label for="minGiftCost">Min-gift cost</label>
-          <input v-model="contact.minGiftCost" type="number" id="minGiftCost" />
+          <label for="maxGiftCost">Max-gift cost</label>
+          <input
+            v-model.lazy.number="maxGiftCost"
+            type="number"
+            id="maxGiftCost"
+            :min="minGiftCost"
+          />
         </div>
       </section>
 
