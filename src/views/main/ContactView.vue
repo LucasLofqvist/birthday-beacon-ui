@@ -1,46 +1,78 @@
 <script setup>
-import { computed, reactive } from "vue";
+import { computed, ref, vModelCheckbox } from "vue";
+import { useRoute } from "vue-router";
 
-//The contact, contactsName and contactAge probably does not need to be reactive
-//as they should be stored in a db and fetched when needed.
-const contact = reactive({
-  surname: "Bob",
-  lastname: "Smith",
-  dateOfBirth: "",
-  gender: "",
-  minGiftCost: 0,
-  maxGiftCost: 0,
-  interests: ["Movies", "Cooking", "Traveling"],
-});
+import edit from "../../assets/icons/edit-pen.svg";
+
+const route = useRoute();
+//Mode create or view, will be able to go from view to edit through a button.
+const mode = ref(route.name === "create" ? "create" : "view");
+
+// Simulated contact data fetching
+function fetchContact() {
+  return {
+    surname: "Bob",
+    lastname: "Smith",
+    dateOfBirth: "1991-05-15",
+    gender: "male",
+    minGiftCost: 100,
+    maxGiftCost: 500,
+    interests: ["Movies", "Cooking", "Traveling"],
+  };
+}
+
+function emptyContact() {
+  return {
+    surname: "",
+    lastname: "",
+    dateOfBirth: "",
+    gender: "",
+    minGiftCost: 0,
+    maxGiftCost: 0,
+    interests: [""],
+  };
+}
+
+const contact = ref(mode.value === "create" ? emptyContact() : fetchContact());
 
 const addInterest = () => {
   if (
-    contact.interests.length < 10 &&
-    contact.interests[contact.interests.length - 1].trim() !== ""
+    contact.value.interests.length < 10 &&
+    contact.value.interests[contact.value.interests.length - 1].trim() !== ""
   ) {
-    contact.interests.push("");
+    contact.value.interests.push("");
   }
 };
 
 const removeInterest = (index) => {
-  contact.interests.splice(index, 1);
+  contact.value.interests.splice(index, 1);
+};
+
+const saveContact = () => {
+  // Logic to be added later
+  console.log("Saving contact:", contact.value);
+};
+
+const deleteContact = () => {
+  // Logic to be added later
+  console.log("Deleting contact");
 };
 
 //Ensures that contactName or "New contact" is rendered
 const contactName = computed(() => {
-  if (contact.surname !== "") {
-    return `${contact.surname} ${contact.lastname}`;
+  if (mode.value === "view" || mode.value === "edit") {
+    return `${contact.value.surname} ${contact.value.lastname}`;
   }
   return "New contact";
 });
 
 //Calculates contacts age based on date of birth
 const contactAge = computed(() => {
-  if (contact.dateOfBirth !== "") {
-    const contactsDate = new Date(contact.dateOfBirth);
+  if (mode.value === "view" || mode.value === "edit") {
+    const contactsDate = new Date(contact.value.dateOfBirth);
 
     const currentYear = new Date().getFullYear();
-    const currentMonth = new Date().getMonth() + 1; // Months are zero-based
+    const currentMonth = new Date().getMonth() + 1;
     const currentDay = new Date().getDate();
     let age = currentYear - contactsDate.getFullYear();
     if (
@@ -56,30 +88,30 @@ const contactAge = computed(() => {
 
 const minGiftCost = computed({
   get() {
-    return contact.minGiftCost;
+    return contact.value.minGiftCost;
   },
   set(value) {
     if (value < 0) {
       value = 0;
     }
-    contact.minGiftCost = value;
-    if (contact.maxGiftCost < value) {
-      contact.maxGiftCost = value;
+    contact.value.minGiftCost = value;
+    if (contact.value.maxGiftCost < value) {
+      contact.value.maxGiftCost = value;
     }
   },
 });
 
 const maxGiftCost = computed({
   get() {
-    return contact.maxGiftCost;
+    return contact.value.maxGiftCost;
   },
   set(value) {
     if (value < 0) {
       value = 0;
     }
-    contact.maxGiftCost = value;
-    if (contact.minGiftCost > value) {
-      contact.minGiftCost = value;
+    contact.value.maxGiftCost = value;
+    if (contact.value.minGiftCost > value) {
+      contact.value.minGiftCost = value;
     }
   },
 });
@@ -90,14 +122,25 @@ const maxDate = new Date().toISOString().split("T")[0];
 
 <template>
   <div class="contact-container">
-    <h1 class="contact-title">
-      {{
-        contact.dateOfBirth !== ""
-          ? `${contactName} - ${contactAge}`
-          : contactName
-      }}
-    </h1>
-    <form class="contact-form" @submit.prevent>
+    <div class="header-section">
+      <h1 class="contact-title">
+        {{
+          mode === "view" || mode === "edit"
+            ? `${contactName} - ${contactAge}`
+            : contactName
+        }}
+      </h1>
+      <button
+        v-if="mode === 'view' || mode === 'edit'"
+        :disabled="mode === 'edit'"
+        @click="mode = 'edit'"
+        class="edit-btn"
+        title="Edit contact"
+      >
+        <img :src="edit" alt="Edit" />
+      </button>
+    </div>
+    <form class="contact-form" @submit.prevent="saveContact">
       <!-- Left section: contact details -->
       <section class="left-section">
         <div class="form-group">
@@ -168,6 +211,7 @@ const maxDate = new Date().toISOString().split("T")[0];
                 class="interest-input"
               />
               <button
+                v-if="mode === 'create' || mode === 'edit'"
                 type="button"
                 @click.prevent="removeInterest(index)"
                 :disabled="contact.interests.length <= 1"
@@ -178,6 +222,10 @@ const maxDate = new Date().toISOString().split("T")[0];
             </div>
           </div>
           <button
+            v-if="
+              (mode === 'create' || mode === 'edit') &&
+              contact.interests.length < 10
+            "
             type="button"
             @click.prevent="addInterest()"
             :disabled="
@@ -190,7 +238,34 @@ const maxDate = new Date().toISOString().split("T")[0];
           </button>
         </div>
       </section>
+      <section class="bottom-section">
+        <button
+          v-if="mode === 'create' || mode === 'edit'"
+          type="submit"
+          class="save-btn"
+        >
+          {{ mode === "create" ? "Create" : "Save" }} Contact
+        </button>
+
+        <button
+          v-if="mode === 'edit'"
+          type="button"
+          @click.prevent="mode = 'view'"
+          class="cancel-btn"
+        >
+          Cancel Edit
+        </button>
+      </section>
     </form>
+
+    <button
+      v-if="mode === 'edit'"
+      type="button"
+      @click.prevent="deleteContact"
+      class="delete-btn"
+    >
+      Delete Contact
+    </button>
   </div>
 </template>
 
@@ -202,8 +277,43 @@ const maxDate = new Date().toISOString().split("T")[0];
   padding: 20px;
 }
 
-.contact-title {
+.header-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin-bottom: 20px;
+  gap: 16px;
+}
+
+.contact-title {
+  margin: 0;
+  flex: 1;
+}
+
+.edit-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.edit-btn:hover:not(:disabled) {
+  background-color: #f0f0f0;
+}
+
+.edit-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.edit-btn img {
+  width: 24px;
+  height: 24px;
 }
 
 .contact-form {
@@ -297,5 +407,64 @@ const maxDate = new Date().toISOString().split("T")[0];
 
 .add-interest-btn {
   margin-top: 8px;
+}
+
+/* Bottom section buttons */
+.bottom-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 15px;
+  flex-basis: 100%;
+  width: 100%;
+}
+
+.save-btn,
+.cancel-btn {
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  min-width: 140px;
+}
+
+.save-btn {
+  background-color: #2196f3;
+  color: white;
+}
+
+.save-btn:hover {
+  background-color: #0b7dda;
+}
+
+.delete-btn {
+  background-color: #f44336;
+  color: white;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 200px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.delete-btn:hover {
+  background-color: #da190b;
+}
+
+.cancel-btn {
+  background-color: #9e9e9e;
+  color: white;
+}
+
+.cancel-btn:hover {
+  background-color: #757575;
 }
 </style>

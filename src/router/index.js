@@ -21,7 +21,13 @@ const routes = [
         component: DashboardView,
       },
       {
-        path: "contact",
+        path: "contact/create",
+        name: "create",
+        component: ContactView,
+      },
+      {
+        path: "contact/view/:id",
+        name: "view",
         component: ContactView,
       },
       // I will add more routes later, settings, etc.
