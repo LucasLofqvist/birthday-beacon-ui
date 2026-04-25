@@ -10,8 +10,21 @@ const contact = reactive({
   gender: "",
   minGiftCost: 0,
   maxGiftCost: 0,
-  interests: "",
+  interests: ["Movies", "Cooking", "Traveling"],
 });
+
+const addInterest = () => {
+  if (
+    contact.interests.length < 10 &&
+    contact.interests[contact.interests.length - 1].trim() !== ""
+  ) {
+    contact.interests.push("");
+  }
+};
+
+const removeInterest = (index) => {
+  contact.interests.splice(index, 1);
+};
 
 //Ensures that contactName or "New contact" is rendered
 const contactName = computed(() => {
@@ -84,7 +97,7 @@ const maxDate = new Date().toISOString().split("T")[0];
           : contactName
       }}
     </h1>
-    <form class="contact-form">
+    <form class="contact-form" @submit.prevent>
       <!-- Left section: contact details -->
       <section class="left-section">
         <div class="form-group">
@@ -141,13 +154,40 @@ const maxDate = new Date().toISOString().split("T")[0];
       <!-- Right section: interests -->
       <section class="right-section">
         <div class="form-group interests-group">
-          <label for="interests">Interests</label>
-          <textarea
-            v-model="contact.interests"
-            id="interests"
-            class="interests-textarea"
-            placeholder="Interest 1, Interest 2, Interest 3, etc."
-          ></textarea>
+          <label>Interests</label>
+          <div class="interests-container">
+            <div
+              v-for="(interest, index) in contact.interests"
+              :key="index"
+              class="interest-field-wrapper"
+            >
+              <input
+                v-model="contact.interests[index]"
+                type="text"
+                :placeholder="`Interest ${index + 1}`"
+                class="interest-input"
+              />
+              <button
+                type="button"
+                @click.prevent="removeInterest(index)"
+                :disabled="contact.interests.length <= 1"
+                class="remove-interest-btn"
+              >
+                Remove
+              </button>
+            </div>
+          </div>
+          <button
+            type="button"
+            @click.prevent="addInterest()"
+            :disabled="
+              contact.interests.length >= 10 ||
+              contact.interests[contact.interests.length - 1].trim() === ''
+            "
+            class="add-interest-btn"
+          >
+            Add Interest
+          </button>
         </div>
       </section>
     </form>
@@ -211,19 +251,51 @@ const maxDate = new Date().toISOString().split("T")[0];
   flex: 1;
 }
 
-.interests-textarea {
+.interests-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.interest-field-wrapper {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.interest-input {
+  flex: 1;
   padding: 8px 12px;
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 1rem;
-  resize: none;
-  height: 425px;
-  font-family: inherit;
 }
 
-@media (max-width: 500px) {
-  .interests-textarea {
-    height: 250px;
-  }
+.remove-interest-btn,
+.add-interest-btn {
+  padding: 8px 12px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.remove-interest-btn:hover:not(:disabled),
+.add-interest-btn:hover:not(:disabled) {
+  background-color: #e0e0e0;
+}
+
+.remove-interest-btn:disabled,
+.add-interest-btn:disabled {
+  background-color: #f5f5f5;
+  border-color: #ddd;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.add-interest-btn {
+  margin-top: 8px;
 }
 </style>
