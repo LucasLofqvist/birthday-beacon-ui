@@ -132,9 +132,9 @@ const maxDate = new Date().toISOString().split("T")[0];
       </h1>
       <button
         v-if="mode === 'view' || mode === 'edit'"
-        :disabled="mode === 'edit'"
-        @click="mode = 'edit'"
+        @click="mode === 'view' ? (mode = 'edit') : (mode = 'view')"
         class="edit-btn"
+        :class="{ active: mode === 'edit' }"
         title="Edit contact"
       >
         <img :src="edit" alt="Edit" />
@@ -145,12 +145,22 @@ const maxDate = new Date().toISOString().split("T")[0];
       <section class="left-section">
         <div class="form-group">
           <label for="surname">Surname *</label>
-          <input v-model="contact.surname" type="text" id="surname" />
+          <input
+            v-model="contact.surname"
+            type="text"
+            id="surname"
+            :disabled="mode === 'view'"
+          />
         </div>
 
         <div class="form-group">
           <label for="lastname">Lastname</label>
-          <input v-model="contact.lastname" type="text" id="lastname" />
+          <input
+            v-model="contact.lastname"
+            type="text"
+            id="lastname"
+            :disabled="mode === 'view'"
+          />
         </div>
 
         <div class="form-group">
@@ -160,12 +170,17 @@ const maxDate = new Date().toISOString().split("T")[0];
             type="date"
             id="dateOfBirth"
             :max="maxDate"
+            :disabled="mode === 'view'"
           />
         </div>
 
         <div class="form-group">
           <label for="gender">Gender</label>
-          <select v-model="contact.gender" id="gender">
+          <select
+            v-model="contact.gender"
+            id="gender"
+            :disabled="mode === 'view'"
+          >
             <option value="">Select gender</option>
             <option value="male">Male</option>
             <option value="female">Female</option>
@@ -180,6 +195,7 @@ const maxDate = new Date().toISOString().split("T")[0];
             type="number"
             id="minGiftCost"
             :min="0"
+            :disabled="mode === 'view'"
           />
         </div>
 
@@ -190,6 +206,7 @@ const maxDate = new Date().toISOString().split("T")[0];
             type="number"
             id="maxGiftCost"
             :min="minGiftCost"
+            :disabled="mode === 'view'"
           />
         </div>
       </section>
@@ -209,6 +226,7 @@ const maxDate = new Date().toISOString().split("T")[0];
                 type="text"
                 :placeholder="`Interest ${index + 1}`"
                 class="interest-input"
+                :disabled="mode === 'view'"
               />
               <button
                 v-if="mode === 'create' || mode === 'edit'"
@@ -244,16 +262,7 @@ const maxDate = new Date().toISOString().split("T")[0];
           type="submit"
           class="save-btn"
         >
-          {{ mode === "create" ? "Create" : "Save" }} Contact
-        </button>
-
-        <button
-          v-if="mode === 'edit'"
-          type="button"
-          @click.prevent="mode = 'view'"
-          class="cancel-btn"
-        >
-          Cancel Edit
+          Save {{ mode === "create" ? "Contact" : "Changes" }}
         </button>
       </section>
     </form>
@@ -291,29 +300,28 @@ const maxDate = new Date().toISOString().split("T")[0];
 }
 
 .edit-btn {
-  background: none;
+  background-color: white;
   border: none;
   cursor: pointer;
   padding: 8px;
-  border-radius: 4px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background-color 0.2s;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.2s;
 }
 
-.edit-btn:hover:not(:disabled) {
-  background-color: #f0f0f0;
-}
-
-.edit-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+.edit-btn.active {
+  transform: scale(0.9);
+  box-shadow:
+    inset 2px 2px 6px rgba(0, 0, 0, 0.25),
+    inset -2px -2px 6px rgba(255, 255, 255, 0.7);
 }
 
 .edit-btn img {
-  width: 24px;
-  height: 24px;
+  width: 26px;
+  height: 26px;
 }
 
 .contact-form {
@@ -409,7 +417,6 @@ const maxDate = new Date().toISOString().split("T")[0];
   margin-top: 8px;
 }
 
-/* Bottom section buttons */
 .bottom-section {
   display: flex;
   align-items: center;
@@ -420,8 +427,7 @@ const maxDate = new Date().toISOString().split("T")[0];
   width: 100%;
 }
 
-.save-btn,
-.cancel-btn {
+.save-btn {
   padding: 10px 20px;
   font-size: 1rem;
   font-weight: 500;
@@ -457,14 +463,5 @@ const maxDate = new Date().toISOString().split("T")[0];
 
 .delete-btn:hover {
   background-color: #da190b;
-}
-
-.cancel-btn {
-  background-color: #9e9e9e;
-  color: white;
-}
-
-.cancel-btn:hover {
-  background-color: #757575;
 }
 </style>
