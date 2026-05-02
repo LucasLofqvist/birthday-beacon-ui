@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref, vModelCheckbox } from "vue";
+import { computed, ref } from "vue";
 import { useRoute } from "vue-router";
 
 import edit from "../../assets/icons/edit-pen.svg";
@@ -59,11 +59,11 @@ const deleteContact = () => {
 };
 
 //Ensures that contactName or "New contact" is rendered
-const contactName = computed(() => {
+const viewTitle = computed(() => {
   if (mode.value === "view" || mode.value === "edit") {
     return `${contact.value.surname} ${contact.value.lastname}`;
   }
-  return "New contact";
+  return "New Contact";
 });
 
 //Calculates contacts age based on date of birth
@@ -123,11 +123,11 @@ const maxDate = new Date().toISOString().split("T")[0];
 <template>
   <div class="contact-container">
     <div class="header-section">
-      <h1 class="contact-title">
+      <h1 class="contact-title" data-test="contact-title">
         {{
           mode === "view" || mode === "edit"
-            ? `${contactName} - ${contactAge}`
-            : contactName
+            ? `${viewTitle} - ${contactAge}`
+            : viewTitle
         }}
       </h1>
       <button
