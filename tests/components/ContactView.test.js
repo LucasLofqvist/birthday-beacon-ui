@@ -56,4 +56,20 @@ describe("ContactView", () => {
 
     expect(surnameInput.element.disabled).toBe(false);
   });
+
+  it("removes an interest field", async () => {
+    const wrapper = await mountContactView("create");
+
+    const input = wrapper.find(".interest-input");
+    await input.setValue("Movies");
+
+    await wrapper.find(".add-interest-btn").trigger("click");
+
+    expect(wrapper.findAll(".interest-input").length).toBe(2);
+
+    const removeButtons = wrapper.findAll(".remove-interest-btn");
+    await removeButtons[0].trigger("click");
+
+    expect(wrapper.findAll(".interest-input").length).toBe(1);
+  });
 });

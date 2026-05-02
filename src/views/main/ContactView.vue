@@ -4,6 +4,8 @@ import { useRoute } from "vue-router";
 
 import edit from "../../assets/icons/edit-pen.svg";
 
+import getAge from "../../utils/getAge";
+
 const route = useRoute();
 //Mode create or view, will be able to go from view to edit through a button.
 const mode = ref(route.name === "create" ? "create" : "view");
@@ -66,24 +68,11 @@ const viewTitle = computed(() => {
   return "New Contact";
 });
 
-//Calculates contacts age based on date of birth
 const contactAge = computed(() => {
   if (mode.value === "view" || mode.value === "edit") {
-    const contactsDate = new Date(contact.value.dateOfBirth);
-
-    const currentYear = new Date().getFullYear();
-    const currentMonth = new Date().getMonth() + 1;
-    const currentDay = new Date().getDate();
-    let age = currentYear - contactsDate.getFullYear();
-    if (
-      currentMonth < contactsDate.getMonth() + 1 ||
-      (currentMonth === contactsDate.getMonth() + 1 &&
-        currentDay < contactsDate.getDate())
-    ) {
-      age--;
-    }
-    return age;
+    return getAge(contact.value.dateOfBirth);
   }
+  return null;
 });
 
 const minGiftCost = computed({
