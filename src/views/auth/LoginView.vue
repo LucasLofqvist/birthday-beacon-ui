@@ -1,8 +1,8 @@
 <script setup>
 import { ref } from "vue";
-import logo from "../assets/icons/logo.PNG";
-import eye_on from "../assets/icons/eye-on.svg";
-import eye_off from "../assets/icons/eye-off.svg";
+import logo from "../../assets/icons/logo.PNG";
+import eye_on from "../../assets/icons/eye-on.svg";
+import eye_off from "../../assets/icons/eye-off.svg";
 
 const isHidden = ref(true);
 </script>
