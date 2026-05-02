@@ -123,7 +123,7 @@ const maxDate = new Date().toISOString().split("T")[0];
 <template>
   <div class="contact-container">
     <div class="header-section">
-      <h1 class="contact-title" data-test="contact-title">
+      <h1 class="contact-title" data-testid="contact-title">
         {{
           mode === "view" || mode === "edit"
             ? `${viewTitle} - ${contactAge}`
@@ -226,6 +226,7 @@ const maxDate = new Date().toISOString().split("T")[0];
                 type="text"
                 :placeholder="`Interest ${index + 1}`"
                 class="interest-input"
+                data-testid="interest-input"
                 :disabled="mode === 'view'"
               />
               <button
