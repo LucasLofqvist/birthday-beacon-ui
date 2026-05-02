@@ -134,6 +134,7 @@ const maxDate = new Date().toISOString().split("T")[0];
         v-if="mode === 'view' || mode === 'edit'"
         @click="mode === 'view' ? (mode = 'edit') : (mode = 'view')"
         class="edit-btn"
+        data-testid="edit-btn"
         :class="{ active: mode === 'edit' }"
         title="Edit contact"
       >

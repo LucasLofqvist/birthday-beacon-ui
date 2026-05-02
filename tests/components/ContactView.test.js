@@ -12,7 +12,7 @@ describe("ContactView", () => {
     expect(title).toBe("New Contact");
   });
 
-  // This test does not take fetched data into account, so will hafto change when that is implemented.
+  // !!! This test does not take fetched data into account, so will hafto change when that is implemented. !!!
   it("renders title in view mode", async () => {
     const wrapper = await mountContactView("view", { id: 1 });
 
@@ -43,5 +43,17 @@ describe("ContactView", () => {
     intrestInputs.forEach((input) => {
       expect(input.element.disabled).toBe(true);
     });
+  });
+
+  it("toggles from view to edit mode when edit button is clicked", async () => {
+    const wrapper = await mountContactView("view", { id: 1 });
+
+    const button = wrapper.find('[data-testid="edit-btn"]');
+
+    await button.trigger("click");
+
+    const surnameInput = wrapper.find("#surname");
+
+    expect(surnameInput.element.disabled).toBe(false);
   });
 });
