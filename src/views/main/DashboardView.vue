@@ -22,8 +22,8 @@ import profile from "../../assets/icons/profile-placeholder.svg";
         <h2 id="contact-name">Contacts name</h2>
 
         <div id="contact-actions">
-          <img :src="edit" alt="Button for editing contact" id="edit-button" />
-          <img :src="profile" alt="Contact profile image" id="profile-image" />
+          <img id="edit-button" :src="edit" alt="Button for editing contact" />
+          <img id="profile-image" :src="profile" alt="Contact profile image" />
         </div>
       </section>
 

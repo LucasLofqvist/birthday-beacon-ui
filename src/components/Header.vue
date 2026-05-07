@@ -5,7 +5,7 @@ import menu from "../assets/icons/menu-burger.svg";
 
 <template>
   <header class="header">
-    <img :src="logo" alt="Birthday beacon logo" id="logo" />
+    <img id="logo" :src="logo" alt="Birthday beacon logo" />
     <h1>Birthday Beacon</h1>
     <button id="menu-btn">
       <img :src="menu" alt="Menu icon" />

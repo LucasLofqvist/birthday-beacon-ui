@@ -1,8 +1,6 @@
 import { mountContactView } from "../utils/mountContactView";
 import { describe, it, expect } from "vitest";
 
-import ContactView from "../../src/views/main/ContactView.vue";
-
 describe("ContactView", () => {
   it("renders title in create mode", async () => {
     const wrapper = await mountContactView("create");

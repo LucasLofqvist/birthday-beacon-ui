@@ -11,22 +11,22 @@ const isHidden = ref(true);
   <div id="login-container">
     <div id="header">
       <h1 alt="Title">Birthday Beacon</h1>
-      <img :src="logo" alt="Birthday beacon logo" id="logo" />
+      <img id="logo" :src="logo" alt="Birthday beacon logo" />
     </div>
 
     <form>
       <input type="email" placeholder="Email" />
       <input :type="isHidden ? 'password' : 'text'" placeholder="Password" />
 
-      <button type="button" @click="isHidden = !isHidden" id="hidden-btn">
+      <button id="hidden-btn" type="button" @click="isHidden = !isHidden">
         <img
+          id="eye"
           v-bind:src="isHidden ? eye_off : eye_on"
           alt="Visibility toggle"
-          id="eye"
         />
       </button>
 
-      <button type="submit" id="login-btn">Login</button>
+      <button id="login-btn" type="submit">Login</button>
     </form>
 
     <hr />

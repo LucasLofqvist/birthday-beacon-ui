@@ -52,12 +52,10 @@ const removeInterest = (index) => {
 
 const saveContact = () => {
   // Logic to be added later
-  console.log("Saving contact:", contact.value);
 };
 
 const deleteContact = () => {
   // Logic to be added later
-  console.log("Deleting contact");
 };
 
 //Ensures that contactName or "New contact" is rendered
@@ -121,11 +119,11 @@ const maxDate = new Date().toISOString().split("T")[0];
       </h1>
       <button
         v-if="mode === 'view' || mode === 'edit'"
-        @click="mode === 'view' ? (mode = 'edit') : (mode = 'view')"
         class="edit-btn"
         data-testid="edit-btn"
         :class="{ active: mode === 'edit' }"
         title="Edit contact"
+        @click="mode === 'view' ? (mode = 'edit') : (mode = 'view')"
       >
         <img :src="edit" alt="Edit" />
       </button>
@@ -136,9 +134,9 @@ const maxDate = new Date().toISOString().split("T")[0];
         <div class="form-group">
           <label for="surname">Surname *</label>
           <input
+            id="surname"
             v-model="contact.surname"
             type="text"
-            id="surname"
             :disabled="mode === 'view'"
           />
         </div>
@@ -146,9 +144,9 @@ const maxDate = new Date().toISOString().split("T")[0];
         <div class="form-group">
           <label for="lastname">Lastname</label>
           <input
+            id="lastname"
             v-model="contact.lastname"
             type="text"
-            id="lastname"
             :disabled="mode === 'view'"
           />
         </div>
@@ -156,9 +154,9 @@ const maxDate = new Date().toISOString().split("T")[0];
         <div class="form-group">
           <label for="dateOfBirth">Date of birth *</label>
           <input
+            id="dateOfBirth"
             v-model="contact.dateOfBirth"
             type="date"
-            id="dateOfBirth"
             :max="maxDate"
             :disabled="mode === 'view'"
           />
@@ -167,8 +165,8 @@ const maxDate = new Date().toISOString().split("T")[0];
         <div class="form-group">
           <label for="gender">Gender</label>
           <select
-            v-model="contact.gender"
             id="gender"
+            v-model="contact.gender"
             :disabled="mode === 'view'"
           >
             <option value="">Select gender</option>
@@ -181,9 +179,9 @@ const maxDate = new Date().toISOString().split("T")[0];
         <div class="form-group">
           <label for="minGiftCost">Min-gift cost</label>
           <input
+            id="minGiftCost"
             v-model.lazy.number="minGiftCost"
             type="number"
-            id="minGiftCost"
             :min="0"
             :disabled="mode === 'view'"
           />
@@ -192,9 +190,9 @@ const maxDate = new Date().toISOString().split("T")[0];
         <div class="form-group">
           <label for="maxGiftCost">Max-gift cost</label>
           <input
+            id="maxGiftCost"
             v-model.lazy.number="maxGiftCost"
             type="number"
-            id="maxGiftCost"
             :min="minGiftCost"
             :disabled="mode === 'view'"
           />
@@ -213,18 +211,18 @@ const maxDate = new Date().toISOString().split("T")[0];
             >
               <input
                 v-model="contact.interests[index]"
+                class="interest-input"
                 type="text"
                 :placeholder="`Interest ${index + 1}`"
-                class="interest-input"
                 data-testid="interest-input"
                 :disabled="mode === 'view'"
               />
               <button
                 v-if="mode === 'create' || mode === 'edit'"
-                type="button"
-                @click.prevent="removeInterest(index)"
-                :disabled="contact.interests.length <= 1"
                 class="remove-interest-btn"
+                type="button"
+                :disabled="contact.interests.length <= 1"
+                @click.prevent="removeInterest(index)"
               >
                 Remove
               </button>
@@ -235,13 +233,13 @@ const maxDate = new Date().toISOString().split("T")[0];
               (mode === 'create' || mode === 'edit') &&
               contact.interests.length < 10
             "
+            class="add-interest-btn"
             type="button"
-            @click.prevent="addInterest()"
             :disabled="
               contact.interests.length >= 10 ||
               contact.interests[contact.interests.length - 1].trim() === ''
             "
-            class="add-interest-btn"
+            @click.prevent="addInterest()"
           >
             Add Interest
           </button>
@@ -250,8 +248,8 @@ const maxDate = new Date().toISOString().split("T")[0];
       <section class="bottom-section">
         <button
           v-if="mode === 'create' || mode === 'edit'"
-          type="submit"
           class="save-btn"
+          type="submit"
         >
           Save {{ mode === "create" ? "Contact" : "Changes" }}
         </button>
@@ -260,9 +258,9 @@ const maxDate = new Date().toISOString().split("T")[0];
 
     <button
       v-if="mode === 'edit'"
+      class="delete-btn"
       type="button"
       @click.prevent="deleteContact"
-      class="delete-btn"
     >
       Delete Contact
     </button>
