@@ -1,27 +1,37 @@
 import { defineConfig } from "vitest/config";
 import vue from "@vitejs/plugin-vue";
-import path from "path";
-import { fileURLToPath } from "url";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import { fileURLToPath, URL } from "node:url";
 
 export default defineConfig({
   plugins: [vue()],
 
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
+      "@": fileURLToPath(new URL("./src", import.meta.url)),
     },
   },
 
   test: {
     environment: "happy-dom",
-
     include: ["tests/**/*.{test,spec}.{js,ts}"],
-
     reporters: ["verbose"],
 
-    // Maybe add coverge reports later.
+    coverage: {
+      provider: "v8",
+      reporter: ["text", "html"],
+      reportsDirectory: "./coverage",
+      exclude: [
+        "coverage/**",
+        "dist/**",
+
+        "src/main.js",
+        "src/App.vue",
+        "src/router/**",
+
+        "tests/**",
+
+        "*.config.js",
+      ],
+    },
   },
 });
