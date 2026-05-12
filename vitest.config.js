@@ -32,6 +32,13 @@ export default defineConfig({
 
         "*.config.js",
       ],
+      // I should increase these thresholds as I add more tests. Maybe block merge if CI fails due to low coverage?
+      thresholds: {
+        lines: 20,
+        functions: 20,
+        branches: 20,
+        statements: 20,
+      },
     },
   },
 });
